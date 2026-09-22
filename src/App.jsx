@@ -388,7 +388,7 @@ function Contact() {
     );
     event.currentTarget.querySelector("[data-form-note]").textContent =
       "Opening your email client with the enquiry details.";
-    window.location.href = `mailto:reports@accesscheckwav.co.uk?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:info@widwebdevs.co.uk?subject=${subject}&body=${body}`;
   }
 
   return (
@@ -404,7 +404,7 @@ function Contact() {
           <div className="contact-points">
             <div className="contact-point">
               <strong>Email</strong>
-              <span>reports@accesscheckwav.co.uk</span>
+              <span>info@widwebdevs.co.uk</span>
             </div>
             <div className="contact-point">
               <strong>Telephone</strong>
