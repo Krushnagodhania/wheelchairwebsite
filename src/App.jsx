@@ -59,23 +59,9 @@ const services = [
 
 const plans = [
   {
-    title: "Single WAV Report",
-    description: "For one vehicle or a one-time licensing query.",
-    price: "£59",
-    suffix: "per vehicle",
-    cta: "Start a single check",
-    featured: false,
-    features: [
-      "Vehicle history and identity review",
-      "Accessibility evidence checklist",
-      "Officer-ready PDF summary",
-      "Standard 48-hour turnaround",
-    ],
-  },
-  {
     title: "Council Desk",
     description: "For licensing teams that need repeat checks each month.",
-    price: "£399",
+    price: "£499",
     suffix: "per month",
     cta: "Request council setup",
     featured: true,
@@ -319,8 +305,8 @@ function Pricing() {
         <p className="section-kicker">Pricing</p>
         <h2 className="section-title">Premium verification with council-friendly options.</h2>
         <p className="section-lede">
-          Choose one-off reports for individual vehicle checks or a council plan for regular licensing work.
-          Pricing is indicative and can be adjusted for procurement requirements.
+          Choose a monthly council workflow or a fleet assurance package for larger reviews. Pricing is
+          indicative and can be adjusted for procurement requirements.
         </p>
         <div className="price-grid">
           {plans.map((plan) => (
@@ -438,7 +424,6 @@ function Contact() {
                 Enquiry type
                 <select name="type" required defaultValue="">
                   <option value="">Select one</option>
-                  <option>Single WAV report</option>
                   <option>Council monthly plan</option>
                   <option>Fleet assurance</option>
                   <option>Procurement discussion</option>
