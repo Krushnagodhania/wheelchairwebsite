@@ -19,9 +19,9 @@ STRIPE_SECRET_KEY=your_stripe_secret_key
 ```
 
 The checkout button uses a Netlify Function at `/.netlify/functions/create-checkout-session`
-to create a one-time Stripe Checkout payment for the Council Desk plan at `£1`.
+to create a one-time Stripe Checkout payment for the Council Desk plan at `£399`.
 Do not use a Stripe Payment Link for this button unless that link is also configured
-as a `£1` product, because Payment Links carry their own Stripe-side price.
+as a `£399` product, because Payment Links carry their own Stripe-side price.
 
 ## Local Development
 

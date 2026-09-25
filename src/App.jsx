@@ -60,13 +60,13 @@ const services = [
 const plans = [
   {
     title: "Council Desk",
-    description: "For licensing teams that need a one-off verification test payment.",
-    price: "£1",
+    description: "For licensing teams that need a one-off WAV verification review.",
+    price: "£399",
     suffix: "one-off",
     cta: "Request council setup",
     featured: true,
     features: [
-      "One-off WAV checkout test",
+      "One-off WAV verification review",
       "Priority evidence review",
       "Policy-specific report wording",
       "Monthly exceptions register",

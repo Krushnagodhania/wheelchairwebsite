@@ -1,4 +1,4 @@
-const COUNCIL_DESK_AMOUNT = 100;
+const COUNCIL_DESK_AMOUNT = 39900;
 
 export async function handler(event) {
   if (event.httpMethod !== "POST") {
