@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const councils = [
   "Ashfield District Council",
@@ -60,13 +60,13 @@ const services = [
 const plans = [
   {
     title: "Council Desk",
-    description: "For licensing teams that need repeat checks each month.",
-    price: "£499",
-    suffix: "per month",
+    description: "For licensing teams that need a one-off verification test payment.",
+    price: "£1",
+    suffix: "one-off",
     cta: "Request council setup",
     featured: true,
     features: [
-      "Up to 10 WAV reports monthly",
+      "One-off WAV checkout test",
       "Priority evidence review",
       "Policy-specific report wording",
       "Monthly exceptions register",
@@ -299,13 +299,53 @@ function CouncilCoverage() {
 }
 
 function Pricing() {
+  const [checkoutState, setCheckoutState] = useState({ loading: false, error: "" });
+
+  async function startCouncilCheckout() {
+    setCheckoutState({ loading: true, error: "" });
+
+    try {
+      const response = await fetch("/.netlify/functions/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ plan: "council_desk" }),
+      });
+      const responseText = await response.text();
+      let data = {};
+
+      try {
+        data = responseText ? JSON.parse(responseText) : {};
+      } catch {
+        data = {};
+      }
+
+      if (!response.ok || !data.url) {
+        const fallbackMessage = response.status === 404
+          ? "Checkout is not connected on this deployment. Deploy the full Netlify project with the netlify/functions folder."
+          : data.error === "Stripe is not configured."
+            ? "Stripe is not configured. Add STRIPE_SECRET_KEY to the environment, then redeploy or restart the dev server."
+            : "Unable to start checkout.";
+        throw new Error(data.error || fallbackMessage);
+      }
+
+      window.location.assign(data.url);
+    } catch (error) {
+      setCheckoutState({
+        loading: false,
+        error: error instanceof Error ? error.message : "Unable to start checkout.",
+      });
+    }
+  }
+
   return (
     <section className="pricing" id="pricing">
       <div className="section-inner">
         <p className="section-kicker">Pricing</p>
         <h2 className="section-title">Premium verification with council-friendly options.</h2>
         <p className="section-lede">
-          Choose a monthly council workflow or a fleet assurance package for larger reviews. Pricing is
+          Choose a one-off council workflow or a fleet assurance package for larger reviews. Pricing is
           indicative and can be adjusted for procurement requirements.
         </p>
         <div className="price-grid">
@@ -322,12 +362,24 @@ function Pricing() {
                   <li key={feature}>{feature}</li>
                 ))}
               </ul>
-              <a className={`button ${plan.featured ? "primary" : "outline"}`} href="#contact">
-                {plan.cta}
-              </a>
+              {plan.featured ? (
+                <button
+                  className="button primary"
+                  type="button"
+                  onClick={startCouncilCheckout}
+                  disabled={checkoutState.loading}
+                >
+                  {checkoutState.loading ? "Opening checkout..." : "Pay with Stripe"}
+                </button>
+              ) : (
+                <a className="button outline" href="#contact">
+                  {plan.cta}
+                </a>
+              )}
             </article>
           ))}
         </div>
+        {checkoutState.error && <p className="checkout-error">{checkoutState.error}</p>}
       </div>
     </section>
   );
@@ -424,7 +476,7 @@ function Contact() {
                 Enquiry type
                 <select name="type" required defaultValue="">
                   <option value="">Select one</option>
-                  <option>Council monthly plan</option>
+                  <option>Council one-off plan</option>
                   <option>Fleet assurance</option>
                   <option>Procurement discussion</option>
                 </select>

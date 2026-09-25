@@ -113,6 +113,12 @@ a {
   transform: translateY(-1px);
 }
 
+.button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  transform: none;
+}
+
 .button.primary {
   color: var(--ink);
   background: var(--amber);
@@ -599,6 +605,17 @@ section {
 
 .price-card .button {
   margin-top: auto;
+}
+
+.checkout-error {
+  max-width: 720px;
+  margin: 20px 0 0;
+  padding: 14px 16px;
+  border: 1px solid #f0b9b9;
+  border-radius: 8px;
+  color: #8a1f1f;
+  background: #fff2f2;
+  font-weight: 750;
 }
 
 .evidence {

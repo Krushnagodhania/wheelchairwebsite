@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "build": "vite build --outDir dist --emptyOutDir && rm -rf outputs && cp -R dist outputs",
+    "dev:netlify": "npx netlify dev",
+    "build": "vite build",
+    "build:outputs": "vite build --outDir dist --emptyOutDir && rm -rf outputs && cp -R dist outputs",
     "preview": "vite preview --host 127.0.0.1"
   },
   "dependencies": {
