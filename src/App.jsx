@@ -441,14 +441,6 @@ function Contact() {
           </p>
           <div className="contact-points">
             <div className="contact-point">
-              <strong>Email</strong>
-              <span>info@widwebdevs.co.uk</span>
-            </div>
-            <div className="contact-point">
-              <strong>Telephone</strong>
-              <span>0330 043 6148</span>
-            </div>
-            <div className="contact-point">
               <strong>Operating hours</strong>
               <span>Monday to Friday, 9:00am to 5:30pm</span>
             </div>
