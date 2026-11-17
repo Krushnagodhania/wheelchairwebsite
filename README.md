@@ -10,18 +10,18 @@ React/Vite website for the AccessCheck WAV taxi council verification service.
 
 These settings are also included in `netlify.toml`, so Netlify should detect them automatically.
 
-## Stripe Setup
+## Stripe Payment Link
 
-Add this environment variable in Netlify before deploying:
+The Council Desk plan displays a one-off price of `£11`. Its payment button opens:
 
-```sh
-STRIPE_SECRET_KEY=your_stripe_secret_key
-```
+https://buy.stripe.com/aFa14n40B1mu5ym7ab9Zm00
 
-The checkout button uses a Netlify Function at `/.netlify/functions/create-checkout-session`
-to create a one-time Stripe Checkout payment for the Council Desk plan at `£399`.
-Do not use a Stripe Payment Link for this button unless that link is also configured
-as a `£399` product, because Payment Links carry their own Stripe-side price.
+The amount charged is controlled by this Payment Link in Stripe. Configure the
+linked product for a one-off `£11` payment in Stripe to match the website.
+The payment button does not require a Stripe secret key or a Netlify Function.
+
+The legacy `create-checkout-session` function is retained for compatibility and
+uses `£11` (1100 pence) if called. It still requires `STRIPE_SECRET_KEY`.
 
 ## Local Development
 
@@ -29,24 +29,6 @@ as a `£399` product, because Payment Links carry their own Stripe-side price.
 npm install
 npm run dev
 ```
-
-Plain Vite is configured to serve the local checkout endpoint at
-`/.netlify/functions/create-checkout-session`, so the Stripe button works during
-local development as long as you have this in `.env`:
-
-```sh
-STRIPE_SECRET_KEY=your_stripe_secret_key
-```
-
-You can also run with Netlify Dev:
-
-```sh
-npm run dev:netlify
-```
-
-For production Stripe checkout, deploy the full project/repository to Netlify.
-Do not deploy only the `dist/` folder by drag-and-drop, because that will omit
-the Netlify Function and the checkout endpoint will return `404`.
 
 ## Production Build
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 const councils = [
   "Ashfield District Council",
@@ -61,7 +61,7 @@ const plans = [
   {
     title: "Council Desk",
     description: "For licensing teams that need a one-off WAV verification review.",
-    price: "£399",
+    price: "£11",
     suffix: "one-off",
     cta: "Request council setup",
     featured: true,
@@ -299,46 +299,6 @@ function CouncilCoverage() {
 }
 
 function Pricing() {
-  const [checkoutState, setCheckoutState] = useState({ loading: false, error: "" });
-
-  async function startCouncilCheckout() {
-    setCheckoutState({ loading: true, error: "" });
-
-    try {
-      const response = await fetch("/.netlify/functions/create-checkout-session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ plan: "council_desk" }),
-      });
-      const responseText = await response.text();
-      let data = {};
-
-      try {
-        data = responseText ? JSON.parse(responseText) : {};
-      } catch {
-        data = {};
-      }
-
-      if (!response.ok || !data.url) {
-        const fallbackMessage = response.status === 404
-          ? "Checkout is not connected on this deployment. Deploy the full Netlify project with the netlify/functions folder."
-          : data.error === "Stripe is not configured."
-            ? "Stripe is not configured. Add STRIPE_SECRET_KEY to the environment, then redeploy or restart the dev server."
-            : "Unable to start checkout.";
-        throw new Error(data.error || fallbackMessage);
-      }
-
-      window.location.assign(data.url);
-    } catch (error) {
-      setCheckoutState({
-        loading: false,
-        error: error instanceof Error ? error.message : "Unable to start checkout.",
-      });
-    }
-  }
-
   return (
     <section className="pricing" id="pricing">
       <div className="section-inner">
@@ -363,14 +323,12 @@ function Pricing() {
                 ))}
               </ul>
               {plan.featured ? (
-                <button
+                <a
                   className="button primary"
-                  type="button"
-                  onClick={startCouncilCheckout}
-                  disabled={checkoutState.loading}
+                  href="https://buy.stripe.com/aFa14n40B1mu5ym7ab9Zm00"
                 >
-                  {checkoutState.loading ? "Opening checkout..." : "Pay with Stripe"}
-                </button>
+                  Pay £11 with Stripe
+                </a>
               ) : (
                 <a className="button outline" href="#contact">
                   {plan.cta}
@@ -379,7 +337,6 @@ function Pricing() {
             </article>
           ))}
         </div>
-        {checkoutState.error && <p className="checkout-error">{checkoutState.error}</p>}
       </div>
     </section>
   );

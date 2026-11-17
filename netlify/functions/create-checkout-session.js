@@ -1,4 +1,4 @@
-const COUNCIL_DESK_AMOUNT = 39900;
+const COUNCIL_DESK_AMOUNT = 1100;
 
 export async function handler(event) {
   if (event.httpMethod !== "POST") {
@@ -32,7 +32,7 @@ export async function handler(event) {
   params.append("line_items[0][price_data][product_data][name]", "AccessCheck WAV Council Desk");
   params.append(
     "line_items[0][price_data][product_data][description]",
-    "One-time wheelchair accessible taxi verification test payment for council licensing teams.",
+    "One-time wheelchair accessible taxi verification payment for council licensing teams.",
   );
   params.append("metadata[plan]", "council_desk");
 
